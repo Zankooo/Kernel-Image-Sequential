@@ -9,22 +9,19 @@ public class ImageProcessor {
     public static void main(String[] args) throws IOException {
 
         // slika
-        String potDoSlike = "slike/barca.jpeg";
-
-        BufferedImage slika = loadImage(potDoSlike);
-
+        String potDoSlike = "slike/4096x4096-Slika.jpg";
+        // nalozimo sliko
+        BufferedImage slika = naloziSliko(potDoSlike);
+        // ce je s sliko vse okej:
         if (slika != null) {
             System.out.println("Slika uspešno naložena!");
             System.out.println("Širina: " + slika.getWidth() + " pikslov");
             System.out.println("Višina: " + slika.getHeight() + " pikslov");
-
-
             System.out.println("-------------------------");
             float[][] izbranKernel = izbiraKernela();
-
+            // cas zacnemo merit pred zacetkom operacije konvolucija
             long zacetniCas = System.currentTimeMillis();
-
-            // novo ustvarjena slika narejena iz funkcijo
+            // kličemo funkcijo konvulucija in sliko shranimo
             BufferedImage novoUstvarjenaSlika = konvolucijaRGB(slika, izbranKernel);
 
             long koncaniCas = System.currentTimeMillis();
@@ -32,9 +29,12 @@ public class ImageProcessor {
             System.out.println("Cas za izvedbo konvolucije je tralal; " + kolikoCasaJeTrajalo + "ms");
             // sliko shranimo
             ImageIO.write(novoUstvarjenaSlika, "png", new File("ustvarjeneSlike/novoUstvarjenaSlika.png"));
+            System.out.println("Ustvarjena slika je na voljo v mapi: ustvarjeneSlike");
 
-        } else {
-            System.out.println("Nalaganje slike ni uspelo.");
+        }
+        // ce s sliko nekaj nu v redu
+        else {
+            System.out.println("Nalaganje slike ni uspelo. Poskusite z drugo sliko");
         }
     }
 
@@ -45,7 +45,7 @@ public class ImageProcessor {
      * @param potDoSlike Pot do slikovne datoteke.
      * @return BufferedImage ali null, če pride do napake.
      */
-    public static BufferedImage loadImage(String potDoSlike) {
+    public static BufferedImage naloziSliko(String potDoSlike) {
         try {
             File file = new File(potDoSlike);
 
@@ -77,9 +77,11 @@ public class ImageProcessor {
     public static float[][] izbiraKernela() {
 
         float[][] blur = {
-                {1f/9, 1f/9, 1f/9},
-                {1f/9, 1f/9, 1f/9},
-                {1f/9, 1f/9, 1f/9}
+                {1f/25, 1f/25, 1f/25, 1f/25, 1f/25},
+                {1f/25, 1f/25, 1f/25, 1f/25, 1f/25},
+                {1f/25, 1f/25, 1f/25, 1f/25, 1f/25},
+                {1f/25, 1f/25, 1f/25, 1f/25, 1f/25},
+                {1f/25, 1f/25, 1f/25, 1f/25, 1f/25}
         };
 
         float[][] sharpen = {
@@ -129,10 +131,10 @@ public class ImageProcessor {
                 yield blur;
             }
         };
+
     }
 
     public static BufferedImage konvolucijaRGB(BufferedImage slika, float[][] kernel) {
-
         // koliko je stevilk oziroma dolzina prve vrstice kernela oz nulte
         // {1f/9, 1f/9, 1f/9} <- 0.vrstica
         // {1f/9, 1f/9, 1f/9} <- 1.vrstica
@@ -198,11 +200,11 @@ public class ImageProcessor {
                     }
                 }
 
-                int outR = clamp(Math.round(vsotaRed), 0, 255);
-                int outG = clamp(Math.round(vsotaGreen), 0, 255);
-                int outB = clamp(Math.round(vsotaBlue), 0, 255);
+                int outRed = clamp(Math.round(vsotaRed), 0, 255);
+                int outGreen = clamp(Math.round(vsotaGreen), 0, 255);
+                int outBlue = clamp(Math.round(vsotaBlue), 0, 255);
 
-                int outARGB = (a << 24) | (outR << 16) | (outG << 8) | outB;
+                int outARGB = (a << 24) | (outRed << 16) | (outGreen << 8) | outBlue;
                 novaSlika.setRGB(x, y, outARGB);
             }
         }
