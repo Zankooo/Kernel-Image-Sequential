@@ -1,42 +1,90 @@
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class ImageProcessor {
 
     public static void main(String[] args) throws IOException {
-
+        ustvariGui();
         // slika
-        String potDoSlike = "slike/4096x4096-Slika.jpg";
-        // nalozimo sliko
-        BufferedImage slika = naloziSliko(potDoSlike);
-        // ce je s sliko vse okej:
-        if (slika != null) {
-            System.out.println("Slika uspešno naložena!");
-            System.out.println("Širina: " + slika.getWidth() + " pikslov");
-            System.out.println("Višina: " + slika.getHeight() + " pikslov");
-            System.out.println("-------------------------");
-            float[][] izbranKernel = izbiraKernela();
-            // cas zacnemo merit pred zacetkom operacije konvolucija
-            long zacetniCas = System.currentTimeMillis();
-            // kličemo funkcijo konvulucija in sliko shranimo
-            BufferedImage novoUstvarjenaSlika = konvolucijaRGB(slika, izbranKernel);
 
-            long koncaniCas = System.currentTimeMillis();
-            long kolikoCasaJeTrajalo = koncaniCas - zacetniCas;
-            System.out.println("Cas za izvedbo konvolucije je tralal; " + kolikoCasaJeTrajalo + "ms");
-            // sliko shranimo
-            ImageIO.write(novoUstvarjenaSlika, "png", new File("ustvarjeneSlike/novoUstvarjenaSlika.png"));
-            System.out.println("Ustvarjena slika je na voljo v mapi: ustvarjeneSlike");
 
-        }
-        // ce s sliko nekaj nu v redu
-        else {
-            System.out.println("Nalaganje slike ni uspelo. Poskusite z drugo sliko");
-        }
+
     }
+    /**
+     * Funkcija ki naloži sliko iz določene poti in jo vrne kot BufferedImage
+     */
+    public static void ustvariGui() {
+        JFrame frame = new JFrame("Image Processing");
+        frame.setSize(420, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        String[] slike = {
+                "128x128-Slika.jpg",
+                "256x256-Slika.jpg",
+                "384x384-Slika.jpg",
+                "512x512-Slika.jpg",
+                "767x768-Slika.jpg",
+                "1024x1024-Slika.jpg",
+                "1536x1536-Slika.jpg",
+                "2048x2048-Slika.jpg",
+                "3072x3072-Slika.jpg",
+                "4096x4096-Slika.jpg"
+        };
+
+        String[] kerneli = {
+                "Blur",
+                "Sharpen",
+                "Sobelx",
+                "Gaussian",
+                "edgeDetection"
+        };
+
+        JComboBox<String> comboSlike = new JComboBox<>(slike);
+        JComboBox<String> comboKernela = new JComboBox<>(kerneli);
+
+        JButton gumb = new JButton("Zaženi konvolucijo");
+
+        gumb.addActionListener(e -> {
+            try {
+                String imeSlike = (String) comboSlike.getSelectedItem();
+                String potDoSlike = "slike/" + imeSlike;
+
+                BufferedImage slika = naloziSliko(potDoSlike);
+
+
+
+                String izbranKernelIme = (String) comboKernela.getSelectedItem();
+                System.out.println("izbranKernelIme: " + izbranKernelIme);
+                obdelajSliko(slika, izbranKernelIme);
+                float[][] izbranKernel = izbiraKernela(izbranKernelIme);
+
+                konvolucijaRGB(slika, izbranKernel);
+
+            } catch (IOException ex) {
+                System.out.println("Napaka pri shranjevanju ali obdelavi slike: " + ex.getMessage());
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new java.awt.GridLayout(3, 1, 10, 10));
+        panel.add(comboSlike);
+        panel.add(comboKernela);
+        panel.add(gumb);
+
+        frame.add(panel);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+
+
+
 
     /**
      * Funkcija ki naloži sliko iz določene poti in jo vrne kot BufferedImage.
@@ -70,11 +118,38 @@ public class ImageProcessor {
         }
     }
 
+    public static void obdelajSliko(BufferedImage slika, String imeKernela) throws IOException {
+        if (slika != null) {
+            System.out.println("Širina: " + slika.getWidth() + " pikslov");
+            System.out.println("Višina: " + slika.getHeight() + " pikslov");
+            System.out.println("-------------------------");
+            // IZBERI KERNEL FUNKCIJO KLIČEMO
+            float[][] izbranKernel = izbiraKernela(imeKernela);
+            // cas zacnemo merit pred zacetkom operacije konvolucija
+            long zacetniCas = System.currentTimeMillis();
+            // KLIČEMO FUNKCIJO KONVOLUCIJA
+            BufferedImage novoUstvarjenaSlika = konvolucijaRGB(slika, izbranKernel);
+
+            long koncaniCas = System.currentTimeMillis();
+            long kolikoCasaJeTrajalo = koncaniCas - zacetniCas;
+            System.out.println("Čas za izvedbo konvolucije je tralal; " + kolikoCasaJeTrajalo + "ms");
+            // sliko shranimo
+            ImageIO.write(novoUstvarjenaSlika, "png", new File("ustvarjeneSlike/novoUstvarjenaSlika.jpg"));
+            System.out.println("Ustvarjena slika je na voljo v mapi: ustvarjeneSlike");
+
+        }
+        // ce s sliko nekaj nu v redu
+        else {
+            System.out.println("Nalaganje slike ni uspelo. Poskusite z drugo sliko");
+        }
+    }
+
+
     /**
      * Funkcija ki vrne izbran kernel, s katerim bomo manipulirali sliko
      * @return izbran kernel
      */
-    public static float[][] izbiraKernela() {
+    public static float[][] izbiraKernela(String izbranKernelIme) {
 
         float[][] blur = {
                 {1f/25, 1f/25, 1f/25, 1f/25, 1f/25},
@@ -96,7 +171,7 @@ public class ImageProcessor {
                 {-1, 0, 1}
         };
 
-        float[][] gaussian = {
+        float[][] Gaussian = {
                 {1f/16, 2f/16, 1f/16},
                 {2f/16, 4f/16, 2f/16},
                 {1f/16, 2f/16, 1f/16}
@@ -109,14 +184,6 @@ public class ImageProcessor {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Izberi konvolucijski kernel:");
-        System.out.println("1 - Blur");
-        System.out.println("2 - Sharpen");
-        System.out.println("3 - Sobel X");
-        System.out.println("4 - Gaussian");
-        System.out.println("5 - EdgeDetection");
-        System.out.println("--------");
-        System.out.print("Vnesi izbiro (1-5): ");
 
         int izbira = sc.nextInt();
 
@@ -124,7 +191,7 @@ public class ImageProcessor {
             case 1 -> blur;
             case 2 -> sharpen;
             case 3 -> sobelX;
-            case 4 -> gaussian;
+            case 4 -> Gaussian;
             case 5 -> edgeDetection;
             default -> {
                 System.out.println("Napačna izbira, uporabljen bo blur.");
