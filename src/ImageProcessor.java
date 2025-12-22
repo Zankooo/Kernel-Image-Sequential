@@ -47,15 +47,15 @@ public class ImageProcessor {
             try {
                 String imeSlike = (String) comboSlike.getSelectedItem();
                 String potDoSlike = "slike/" + imeSlike;
+                // KLIČEMO PRVO FUNKCIJO
                 BufferedImage slika = naloziSliko(potDoSlike);
 
                 String izbranKernelIme = (String) comboKernela.getSelectedItem();
                 System.out.println("-------------------------");
                 System.out.println("Izbran kernel ime: " + izbranKernelIme);
+                // KLIČEMO DRUGO FUNKCIJO, ONA PA NAPREJ KLIČE ŠE OSTALE
                 obdelajSliko(slika, izbranKernelIme);
-                float[][] izbranKernel = izbiraKernela(izbranKernelIme);
-
-                konvolucijaRGB(slika, izbranKernel);
+                
 
             } catch (IOException ex) {
                 System.out.println("Napaka pri shranjevanju ali obdelavi slike: " + ex.getMessage());
@@ -111,10 +111,12 @@ public class ImageProcessor {
             System.out.println("Širina: " + slika.getWidth() + " pikslov");
             System.out.println("Višina: " + slika.getHeight() + " pikslov");
             System.out.println("-------------------------");
+            
             // IZBERI KERNEL FUNKCIJO KLIČEMO
             float[][] izbranKernel = izbiraKernela(imeKernela);
             // cas zacnemo merit pred zacetkom operacije konvolucija
             long zacetniCas = System.currentTimeMillis();
+
             // KLIČEMO FUNKCIJO KONVOLUCIJA
             BufferedImage novoUstvarjenaSlika = konvolucijaRGB(slika, izbranKernel);
 
