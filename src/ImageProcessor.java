@@ -11,19 +11,12 @@ public class ImageProcessor {
 
     public static void main(String[] args) throws IOException {
         ustvariGui();
-        // slika
-
-
-
     }
-    /**
-     * Funkcija ki naloži sliko iz določene poti in jo vrne kot BufferedImage
-     */
+    
     public static void ustvariGui() {
         JFrame frame = new JFrame("Image Processing");
         frame.setSize(420, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         String[] slike = {
                 "128x128-Slika.jpg",
                 "256x256-Slika.jpg",
@@ -36,11 +29,11 @@ public class ImageProcessor {
                 "3072x3072-Slika.jpg",
                 "4096x4096-Slika.jpg"
         };
-
+        // morajo biti ista imena kot spodaj da je match
         String[] kerneli = {
                 "Blur",
                 "Sharpen",
-                "Sobelx",
+                "SobelX",
                 "Gaussian",
                 "EdgeDetection"
         };
@@ -54,13 +47,11 @@ public class ImageProcessor {
             try {
                 String imeSlike = (String) comboSlike.getSelectedItem();
                 String potDoSlike = "slike/" + imeSlike;
-
                 BufferedImage slika = naloziSliko(potDoSlike);
 
-
-
                 String izbranKernelIme = (String) comboKernela.getSelectedItem();
-                System.out.println("izbranKernelIme: " + izbranKernelIme);
+                System.out.println("-------------------------");
+                System.out.println("Izbran kernel ime: " + izbranKernelIme);
                 obdelajSliko(slika, izbranKernelIme);
                 float[][] izbranKernel = izbiraKernela(izbranKernelIme);
 
@@ -128,8 +119,8 @@ public class ImageProcessor {
             BufferedImage novoUstvarjenaSlika = konvolucijaRGB(slika, izbranKernel);
 
             long koncaniCas = System.currentTimeMillis();
-            long kolikoCasaJeTrajalo = koncaniCas - zacetniCas;
-            System.out.println("Čas za izvedbo konvolucije je tralal; " + kolikoCasaJeTrajalo + "ms");
+            double kolikoCasaJeTrajaloSek = (koncaniCas - zacetniCas) / 1000.0;
+            System.out.println("Čas za izvedbo konvolucije je trajal; " + kolikoCasaJeTrajaloSek + " sekund");
             // sliko shranimo
             ImageIO.write(novoUstvarjenaSlika, "png", new File("ustvarjeneSlike/novoUstvarjenaSlika.jpg"));
             System.out.println("Ustvarjena slika je na voljo v mapi: ustvarjeneSlike");
