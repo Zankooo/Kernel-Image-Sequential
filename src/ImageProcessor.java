@@ -42,7 +42,7 @@ public class ImageProcessor {
                 "Sharpen",
                 "Sobelx",
                 "Gaussian",
-                "edgeDetection"
+                "EdgeDetection"
         };
 
         JComboBox<String> comboSlike = new JComboBox<>(slike);
@@ -82,10 +82,6 @@ public class ImageProcessor {
         frame.setVisible(true);
     }
 
-
-
-
-
     /**
      * Funkcija ki naloži sliko iz določene poti in jo vrne kot BufferedImage.
      * BufferedImage je klass za delo s slikami v RAMU
@@ -93,6 +89,7 @@ public class ImageProcessor {
      * @param potDoSlike Pot do slikovne datoteke.
      * @return BufferedImage ali null, če pride do napake.
      */
+
     public static BufferedImage naloziSliko(String potDoSlike) {
         try {
             File file = new File(potDoSlike);
@@ -151,7 +148,7 @@ public class ImageProcessor {
      */
     public static float[][] izbiraKernela(String izbranKernelIme) {
 
-        float[][] blur = {
+        float[][] Blur = {
                 {1f/25, 1f/25, 1f/25, 1f/25, 1f/25},
                 {1f/25, 1f/25, 1f/25, 1f/25, 1f/25},
                 {1f/25, 1f/25, 1f/25, 1f/25, 1f/25},
@@ -159,13 +156,13 @@ public class ImageProcessor {
                 {1f/25, 1f/25, 1f/25, 1f/25, 1f/25}
         };
 
-        float[][] sharpen = {
+        float[][] Sharpen = {
                 { 0, -1,  0},
                 {-1,  5, -1},
                 { 0, -1,  0}
         };
 
-        float[][] sobelX = {
+        float[][] SobelX = {
                 {-1, 0, 1},
                 {-2, 0, 2},
                 {-1, 0, 1}
@@ -176,26 +173,22 @@ public class ImageProcessor {
                 {2f/16, 4f/16, 2f/16},
                 {1f/16, 2f/16, 1f/16}
         };
-        float[][] edgeDetection = {
+        float[][] EdgeDetection = {
                 { 0, -1,  0},
                 {-1,  4, -1},
                 { 0, -1,  0}
         };
 
-        Scanner sc = new Scanner(System.in);
-
-
-        int izbira = sc.nextInt();
-
-        return switch (izbira) {
-            case 1 -> blur;
-            case 2 -> sharpen;
-            case 3 -> sobelX;
-            case 4 -> Gaussian;
-            case 5 -> edgeDetection;
+        
+        return switch (izbranKernelIme) {
+            case "Blur" -> Blur;
+            case "Sharpen" -> Sharpen;
+            case "SobelX" -> SobelX;
+            case "Gaussian" -> Gaussian;
+            case "EdgeDetection" -> EdgeDetection;
             default -> {
                 System.out.println("Napačna izbira, uporabljen bo blur.");
-                yield blur;
+                yield Blur;
             }
         };
 
