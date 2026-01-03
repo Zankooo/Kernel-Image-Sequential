@@ -64,7 +64,7 @@ public class ImageService {
     }
 
 
-    public static void obdelajSliko(ArrayList<BufferedImage> slike, ArrayList<String> imenaKernelov) throws IOException {
+    public static void izvediOperacijeSlikam(ArrayList<BufferedImage> slike, ArrayList<String> imenaKernelov) throws IOException {
 
         if (slike == null || slike.isEmpty()) {
             System.out.println("Nalaganje slik ni uspelo. Poskusite z drugo izbiro.");
@@ -75,6 +75,7 @@ public class ImageService {
 
 
         ArrayList<float[][]> kerneli = Kernel.izbiraKernelov(imenaKernelov);
+        
         // čas merimo izključno za izvedbo konvolucije
         // tukaj ne vključimo notri čas branja slika čas write na disk..
         long zacetniCas = System.currentTimeMillis();
@@ -85,20 +86,25 @@ public class ImageService {
         long koncaniCas = System.currentTimeMillis();
         double kolikoCasaJeTrajaloSek = (koncaniCas - zacetniCas) / 1000.0;
 
-        System.out.println("Čas za izvedbo konvolucije" + slike.size() + "je trajal: "
+        System.out.println("Čas za izvedbo konvolucije" + slike.size() + " slike/k je trajal: "
                 + kolikoCasaJeTrajaloSek + " sekund");
-
-        // shranimo vsako sliko posebej
-        for (int i = 0; i < rezultati.size(); i++) {
-            BufferedImage rezultat = rezultati.get(i);
-            ImageIO.write(
-                    rezultat,
-                    "png",
-                    new File("ustvarjeneSlike/rezultat_" + i + ".png")
-            );
-        }
-        System.out.println("Ustvarjene slike so na voljo v mapi: ustvarjeneSlike");
+                
+        shraniNoveSlikeVmapo(rezultati);
+        
     }
+
+    private static void shraniNoveSlikeVmapo(ArrayList<BufferedImage> rezultati) throws IOException {
+    for (int i = 0; i < rezultati.size(); i++) {
+        BufferedImage rezultat = rezultati.get(i);
+        ImageIO.write(
+                rezultat,
+                "png",
+                new File("ustvarjeneSlike/rezultat_" + i + ".png")
+        );
+    }
+    System.out.println("Ustvarjene slike so na voljo v mapi: ustvarjeneSlike");
+}
+
 
 
 }
