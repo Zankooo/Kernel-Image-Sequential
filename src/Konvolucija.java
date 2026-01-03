@@ -18,10 +18,8 @@ public class Konvolucija {
      * @return Seznam BufferedImage objektov, ki predstavljajo končne rezultate obdelave.
      */
 
-    public static ArrayList<BufferedImage> konvolucijaRGBVecSlik(
-        ArrayList<BufferedImage> slike,
-        ArrayList<float[][]> kerneli) 
-        {
+    public static ArrayList<BufferedImage> konvolucijaRGBVecSlik(ArrayList<BufferedImage> slike, ArrayList<float[][]> kerneli) {
+        
         // kamor bomo shranjevali rezultate slik po konvoluciji
         ArrayList<BufferedImage> rezultatiSlik = new ArrayList<>();
         // vzamemo vsako sliko posebej

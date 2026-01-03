@@ -1,21 +1,15 @@
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.*;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+
 
 public class Gui {
 
+    // basically orkestrator vsega
     public static void ustvariGui() {
 
         JFrame frame = ustvariOsnovnoPraznoOkno();
@@ -23,25 +17,33 @@ public class Gui {
         JButton gumbEnaSlika = new JButton("Obdelaj izbrano sliko");
         JButton gumbMapa = new JButton("Obdelaj mapo slik");
 
-        JComboBox<String> comboSlike = ustvariDropdownSlik();
+        // vse pred izbrane slike
+        JComboBox<String> comboSlike = ustvariDropdownPredIzbranihSlik();
 
+        // checkbox za vse kernele
         JCheckBox cbBlur = new JCheckBox("Blur");
         JCheckBox cbSharpen = new JCheckBox("Sharpen");
         JCheckBox cbSobelX = new JCheckBox("SobelX");
         JCheckBox cbGaussian = new JCheckBox("Gaussian");
         JCheckBox cbEdge = new JCheckBox("EdgeDetection");
 
+
+
         ArrayList<String> imenaKernelov = new ArrayList<>();
-
+        // te dve funkciji sta povezani med sabo
         ActionListener fairListener = ustvariFairListener(imenaKernelov);
-
         poveziCheckboxe(fairListener, cbBlur, cbSharpen, cbSobelX, cbGaussian, cbEdge);
 
+
+        // ko kliknem gumb za eno sliko
         dodajListenerZaEnaSlika(gumbEnaSlika, comboSlike, imenaKernelov);
+        // ko kliknem gumb za obdelavo več slik
         dodajListenerZaMapa(gumbMapa, frame, imenaKernelov);
 
+        // vse elemente dodamo na en panel
         JPanel panel = ustvariPanel(comboSlike, cbBlur, cbSharpen, cbSobelX, cbGaussian, cbEdge, gumbEnaSlika, gumbMapa);
-
+        
+        // dodamo ta panel na window. kot komponento basically
         frame.add(panel);
 
         prikaziOkno(frame);
@@ -57,7 +59,7 @@ public class Gui {
         return frame;
     }
 
-    private static JComboBox<String> ustvariDropdownSlik() {
+    private static JComboBox<String> ustvariDropdownPredIzbranihSlik() {
         String[] slike = {
                 "128x128-Slika.jpg",
                 "256x256-Slika.jpg",
@@ -106,11 +108,8 @@ public class Gui {
         cbEdge.addActionListener(fairListener);
     }
 
-    private static void dodajListenerZaEnaSlika(
-            JButton gumbEnaSlika,
-            JComboBox<String> comboSlike,
-            ArrayList<String> imenaKernelov
-    ) {
+    private static void 
+    dodajListenerZaEnaSlika(JButton gumbEnaSlika,JComboBox<String> comboSlike,ArrayList<String> imenaKernelov) {
         gumbEnaSlika.addActionListener(event -> {
 
             if (imenaKernelov.isEmpty()) {
@@ -134,7 +133,7 @@ public class Gui {
                 System.out.println("Izbrana slika: " + imeSlike);
                 System.out.println("Izbrani kerneli (zaporedje): " + imenaKernelov);
 
-                ImageService.obdelajSliko(slikeSeznam, new ArrayList<>(imenaKernelov));
+                ImageService.izvediOperacijeSlikam(slikeSeznam, new ArrayList<>(imenaKernelov));
 
             } catch (IOException e) {
                 System.out.println("Napaka pri obdelavi slike.");
@@ -142,11 +141,9 @@ public class Gui {
         });
     }
 
-    private static void dodajListenerZaMapa(
-            JButton gumbMapa,
-            JFrame frame,
-            ArrayList<String> imenaKernelov
-    ) {
+
+    private static void dodajListenerZaMapa(JButton gumbMapa,JFrame frame,ArrayList<String> imenaKernelov) {
+        
         gumbMapa.addActionListener(event -> {
 
             if (imenaKernelov.isEmpty()) {
@@ -176,7 +173,7 @@ public class Gui {
             System.out.println("Izbrani kerneli (zaporedje): " + imenaKernelov);
 
             try {
-                ImageService.obdelajSliko(slikeSeznam, new ArrayList<>(imenaKernelov));
+                ImageService.izvediOperacijeSlikam(slikeSeznam, new ArrayList<>(imenaKernelov));
             } catch (IOException e) {
                 System.out.println("Napaka pri obdelavi mape.");
             }
@@ -184,7 +181,6 @@ public class Gui {
     }
 
     
-
     private static JPanel ustvariPanel(
             JComboBox<String> comboSlike,
             JCheckBox cbBlur,
