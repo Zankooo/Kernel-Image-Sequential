@@ -27,6 +27,7 @@ public class Konvolucija {
             BufferedImage trenutnaSlika = slike.get(i);
             // in na njen naredimo sekvenco vseh izbranih kernelov
             for (int j = 0; j < kerneli.size(); j++) {
+                // KLE NOTRI DODAT ŠE MIRROR IF STATEMENT BASICALLY
                 float[][] kernel = kerneli.get(j);
                 // kličemo logično funkcijo
                 trenutnaSlika = konvolucijaRGB(trenutnaSlika, kernel);
@@ -38,6 +39,12 @@ public class Konvolucija {
         return rezultatiSlik;
     }
 
+
+    public static BufferedImage mirrorFunkcija(BufferedImage slika){
+        
+        return slika;
+
+    }
 
     /**
      * Funkcija izvede 2D konvolucijo nad barvno sliko (RGB) z uporabo podanega kernela.
