@@ -26,13 +26,14 @@ public class Gui {
         JCheckBox cbSobelX = new JCheckBox("SobelX");
         JCheckBox cbGaussian = new JCheckBox("Gaussian");
         JCheckBox cbEdge = new JCheckBox("EdgeDetection");
+        JCheckBox cbMirror = new JCheckBox("Mirror");
 
 
 
         ArrayList<String> imenaKernelov = new ArrayList<>();
         // te dve funkciji sta povezani med sabo
         ActionListener fairListener = ustvariFairListener(imenaKernelov);
-        poveziCheckboxe(fairListener, cbBlur, cbSharpen, cbSobelX, cbGaussian, cbEdge);
+        poveziCheckboxe(fairListener, cbBlur, cbSharpen, cbSobelX, cbGaussian, cbEdge, cbMirror);
 
 
         // ko kliknem gumb za eno sliko
@@ -41,7 +42,7 @@ public class Gui {
         dodajListenerZaMapa(gumbMapa, frame, imenaKernelov);
 
         // vse elemente dodamo na en panel
-        JPanel panel = ustvariPanel(comboSlike, cbBlur, cbSharpen, cbSobelX, cbGaussian, cbEdge, gumbEnaSlika, gumbMapa);
+        JPanel panel = ustvariPanel(comboSlike, cbBlur, cbSharpen, cbSobelX, cbGaussian, cbEdge, cbMirror, gumbEnaSlika, gumbMapa);
         
         // dodamo ta panel na window. kot komponento basically
         frame.add(panel);
@@ -99,13 +100,16 @@ public class Gui {
             JCheckBox cbSharpen,
             JCheckBox cbSobelX,
             JCheckBox cbGaussian,
-            JCheckBox cbEdge
+            JCheckBox cbEdge,
+            JCheckBox cbMirror
+
     ) {
         cbBlur.addActionListener(fairListener);
         cbSharpen.addActionListener(fairListener);
         cbSobelX.addActionListener(fairListener);
         cbGaussian.addActionListener(fairListener);
         cbEdge.addActionListener(fairListener);
+        cbMirror.addActionListener(fairListener);
     }
 
     private static void 
@@ -180,32 +184,45 @@ public class Gui {
         });
     }
 
-    
+    // funkcija ki ustvari panel in naredi kako bo izgledal vizualno
     private static JPanel ustvariPanel(
-            JComboBox<String> comboSlike,
-            JCheckBox cbBlur,
-            JCheckBox cbSharpen,
-            JCheckBox cbSobelX,
-            JCheckBox cbGaussian,
-            JCheckBox cbEdge,
-            JButton gumbEnaSlika,
-            JButton gumbMapa
+        JComboBox<String> comboSlike,
+        JCheckBox cbBlur,
+        JCheckBox cbSharpen,
+        JCheckBox cbSobelX,
+        JCheckBox cbGaussian,
+        JCheckBox cbEdge,
+        JCheckBox cbMirror,
+        JButton gumbEnaSlika,
+        JButton gumbMapa
     ) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(8, 1, 10, 5));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel panel = new JPanel(new BorderLayout(0, 12));
+        panel.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-        panel.add(comboSlike);
-        panel.add(cbBlur);
-        panel.add(cbSharpen);
-        panel.add(cbSobelX);
-        panel.add(cbGaussian);
-        panel.add(cbEdge);
-        panel.add(gumbEnaSlika);
-        panel.add(gumbMapa);
+        JPanel zgoraj = new JPanel(new BorderLayout());
+        zgoraj.add(comboSlike, BorderLayout.CENTER);
+
+        JPanel checkboxi = new JPanel(new GridLayout(0, 2, 12, 8));
+        checkboxi.setBorder(BorderFactory.createTitledBorder("Kerneli (izberi vsaj enega)"));
+        checkboxi.add(cbBlur);
+        checkboxi.add(cbSharpen);
+        checkboxi.add(cbSobelX);
+        checkboxi.add(cbGaussian);
+        checkboxi.add(cbEdge);
+        checkboxi.add(cbMirror);
+
+        JPanel spodaj = new JPanel(new GridLayout(1, 2, 12, 0));
+        spodaj.add(gumbEnaSlika);
+        spodaj.add(gumbMapa);
+
+        panel.add(zgoraj, BorderLayout.NORTH);
+        panel.add(checkboxi, BorderLayout.CENTER);
+        panel.add(spodaj, BorderLayout.SOUTH);
 
         return panel;
     }
+
+
 
     /**
      * Funkcija ki prikaže okno

@@ -5,9 +5,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-
-
-
 public class ImageService {
 
     /**

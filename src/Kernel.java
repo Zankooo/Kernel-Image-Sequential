@@ -48,8 +48,10 @@ public class Kernel {
                 case "SobelX" -> seznamKernelov.add(SobelX);
                 case "Gaussian" -> seznamKernelov.add(Gaussian);
                 case "EdgeDetection" -> seznamKernelov.add(EdgeDetection);
+                // kaj da kle damo v seznam kernelov?
+                case "Mirror" -> seznamKernelov.add(EdgeDetection);
                 default -> {
-                    System.out.println("Neznan kernel: " + imeKernela + " – uporabljen Blur.");
+                    System.out.println("Neznan kernel: " + imeKernela + " – uporabljen bo Blur.");
                     seznamKernelov.add(Blur);
                 }
             }
