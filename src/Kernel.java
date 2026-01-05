@@ -41,6 +41,9 @@ public class Kernel {
                 { 0, -1,  0}
         };
 
+        // pac kr neki sm dou tuki samo da pac je lahko vse v enem arraylistu
+        
+
         for (String imeKernela : izbraniKerneli) {
             switch (imeKernela) {
                 case "Blur" -> seznamKernelov.add(Blur);
@@ -48,8 +51,7 @@ public class Kernel {
                 case "SobelX" -> seznamKernelov.add(SobelX);
                 case "Gaussian" -> seznamKernelov.add(Gaussian);
                 case "EdgeDetection" -> seznamKernelov.add(EdgeDetection);
-                // kaj da kle damo v seznam kernelov?
-                case "Mirror" -> seznamKernelov.add(EdgeDetection);
+    
                 default -> {
                     System.out.println("Neznan kernel: " + imeKernela + " – uporabljen bo Blur.");
                     seznamKernelov.add(Blur);

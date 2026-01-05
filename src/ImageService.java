@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JCheckBox;
 
 public class ImageService {
 
@@ -61,7 +62,7 @@ public class ImageService {
     }
 
 
-    public static void izvediOperacijeSlikam(ArrayList<BufferedImage> slike, ArrayList<String> imenaKernelov) throws IOException {
+    public static void izvediOperacijeSlikam(ArrayList<BufferedImage> slike, ArrayList<String> imenaKernelov, JCheckBox cbmirror) throws IOException {
 
         if (slike == null || slike.isEmpty()) {
             System.out.println("Nalaganje slik ni uspelo. Poskusite z drugo izbiro.");
@@ -78,12 +79,13 @@ public class ImageService {
         long zacetniCas = System.currentTimeMillis();
 
         ArrayList<BufferedImage> rezultati =
-                Konvolucija.konvolucijaRGBVecSlik(slike, kerneli);
+                Konvolucija.izvediOperacije(slike, kerneli, cbmirror);
 
         long koncaniCas = System.currentTimeMillis();
         double kolikoCasaJeTrajaloSek = (koncaniCas - zacetniCas) / 1000.0;
 
-        System.out.println("Čas za izvedbo konvolucije" + slike.size() + " slike/k je trajal: "
+        System.out.println();
+        System.out.println("Čas za izvedbo konvolucije/ij in ali mirror-ja toliko slikam: " + slike.size() + ", je trajal: "
                 + kolikoCasaJeTrajaloSek + " sekund");
                 
         shraniNoveSlikeVmapo(rezultati);
@@ -91,16 +93,36 @@ public class ImageService {
     }
 
     private static void shraniNoveSlikeVmapo(ArrayList<BufferedImage> rezultati) throws IOException {
-    for (int i = 0; i < rezultati.size(); i++) {
-        BufferedImage rezultat = rezultati.get(i);
-        ImageIO.write(
-                rezultat,
-                "png",
-                new File("ustvarjeneSlike/rezultat_" + i + ".png")
-        );
+        File mapa = new File("ustvarjeneSlike");
+
+        // pobrisemo prejsne slike ali ustvarimo direktorij ce ga se ni ustvarjega
+        if (mapa.exists() && mapa.isDirectory()) {
+            File[] datoteke = mapa.listFiles();
+            if (datoteke != null) {
+                for (File f : datoteke) {
+                    if (f.isFile()) {
+                        f.delete();
+                    }
+                }
+            }
+        } else {
+            mapa.mkdirs();
+        }
+
+        // shranimo slike notri
+        for (int i = 0; i < rezultati.size(); i++) {
+            BufferedImage rezultat = rezultati.get(i);
+            ImageIO.write(
+                    rezultat,
+                    "png",
+                    new File(mapa, "slika_" + (i + 1) + ".png")
+            );
+        }
+
+        System.out.println();
+        System.out.println("Ustvarjene slike so na voljo v mapi: ustvarjeneSlike");
     }
-    System.out.println("Ustvarjene slike so na voljo v mapi: ustvarjeneSlike");
-}
+
 
 
 
