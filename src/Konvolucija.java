@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import javax.swing.JCheckBox;
+
 import java.awt.image.BufferedImage;
 
 public class Konvolucija {
@@ -18,7 +22,7 @@ public class Konvolucija {
      * @return Seznam BufferedImage objektov, ki predstavljajo končne rezultate obdelave.
      */
 
-    public static ArrayList<BufferedImage> konvolucijaRGBVecSlik(ArrayList<BufferedImage> slike, ArrayList<float[][]> kerneli) {
+    public static ArrayList<BufferedImage> izvediOperacije(ArrayList<BufferedImage> slike, ArrayList<float[][]> kerneli, JCheckBox cbMirror) {
         
         // kamor bomo shranjevali rezultate slik po konvoluciji
         ArrayList<BufferedImage> rezultatiSlik = new ArrayList<>();
@@ -27,12 +31,18 @@ public class Konvolucija {
             BufferedImage trenutnaSlika = slike.get(i);
             // in na njen naredimo sekvenco vseh izbranih kernelov
             for (int j = 0; j < kerneli.size(); j++) {
-                // KLE NOTRI DODAT ŠE MIRROR IF STATEMENT BASICALLY
+                
+                System.out.println("Za " + (i + 1) + ". sliko je končana operacija: " + Arrays.deepToString(kerneli.get(j)) );
+                
                 float[][] kernel = kerneli.get(j);
                 // kličemo logično funkcijo
                 trenutnaSlika = konvolucijaRGB(trenutnaSlika, kernel);
             }
-
+            // OBRAT SLIKE OZ MIRROR SE NAREDI VEDNO NA KONCU!
+            if (cbMirror.isSelected()) {
+                trenutnaSlika = mirrorFunkcija(trenutnaSlika);
+}
+        
             rezultatiSlik.add(trenutnaSlika);
         }
 
@@ -40,11 +50,22 @@ public class Konvolucija {
     }
 
 
-    public static BufferedImage mirrorFunkcija(BufferedImage slika){
-        
-        return slika;
+    public static BufferedImage mirrorFunkcija(BufferedImage slika) {
+        int sirina = slika.getWidth();
+        int visina = slika.getHeight();
 
+        BufferedImage out = new BufferedImage(sirina, visina, slika.getType());
+
+        for (int y = 0; y < visina; y++) {
+            for (int x = 0; x < sirina; x++) {
+                int rgb = slika.getRGB(x, y);
+                out.setRGB(sirina - 1 - x, y, rgb);
+            }
+        }
+
+        return out;
     }
+
 
     /**
      * Funkcija izvede 2D konvolucijo nad barvno sliko (RGB) z uporabo podanega kernela.
