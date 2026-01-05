@@ -54,7 +54,7 @@ public class Gui {
      * ustvarimo prazno okno
      */
     private static JFrame ustvariOsnovnoPraznoOkno() {
-        JFrame frame = new JFrame("Kernel Image Processing");
+        JFrame frame = new JFrame("Kernel Image Processing - Sequential");
         frame.setSize(600, 380);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return frame;
