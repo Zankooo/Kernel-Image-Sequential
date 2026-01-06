@@ -12,19 +12,21 @@ Mi kot uporabnik programa damo programu eno ali več slik svojih poljubnih slik 
 - Izberemo operacije blur in mirror. (v konzoli se nam izpiše vrstni red operacij) - v tem vrstnem redu se bodo izvedle. 
 - Kliknemo gumb `Obdelaj izbrano sliko` 
 - V mapi `ustvarjene slike` se nam pojavi rezultat
+- V konzoli pa tudi lahko vidimo katere operacije so se zgodile na kateri sliki, v kakšnem vrstnem redu, in tudi koliko je program potreboval da je naredil vse operacije nad izbranimi slikami!
 
 ### 2. Primer uporabe
 - Izberemo sliko `2048x2048-Slika.jpg`
 - Izberemo operacije; blur, edge detection in sharpen (v konzoli se nam izpiše vrstni red operacij) - v tem vrstnem redu se bodo izvedle. 
 - Kliknemo gumb `Obdelaj izbrano sliko` 
 - V mapi `ustvarjene slike` se nam pojavi rezultat
+- V konzoli pa tudi lahko vidimo katere operacije so se zgodile na kateri sliki, v kakšnem vrstnem redu, in tudi koliko je program potreboval da je naredil vse operacije nad izbranimi slikami!
 
 ### 3. Primer uporabe
 - Izberemo operacije; blur, edge detection in sharpen (v konzoli se nam izpiše vrstni red operacij) - v tem vrstnem redu se bodo izvedle. 
 - Kliknemo gumb `Obdelaj mapo slik` in izberemo mapo v kateri so neke slike
 - Izberemo to mapo in 
 - V mapi `ustvarjene slike` se nam pojavi rezultat (za vsako od teh slik se je naredila sekvenca izbranih operacij)
-
+- V konzoli pa tudi lahko vidimo katere operacije so se zgodile na kateri sliki, v kakšnem vrstnem redu, in tudi koliko je program potreboval da je naredil vse operacije nad izbranimi slikami!
 
 
 ## 🚩 Navodila za zagon programa

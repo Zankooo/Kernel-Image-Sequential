@@ -69,8 +69,8 @@ public class ImageService {
             return;
         }
 
-        System.out.println("-------------------------");
-
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("REZULTATI:");
 
         ArrayList<float[][]> kerneli = Kernel.izbiraKernelov(imenaKernelov);
         
@@ -85,9 +85,9 @@ public class ImageService {
         double kolikoCasaJeTrajaloSek = (koncaniCas - zacetniCas) / 1000.0;
 
         System.out.println();
-        System.out.println("Čas za izvedbo konvolucije/ij in ali mirror-ja toliko slikam: " + slike.size() + ", je trajal: "
-                + kolikoCasaJeTrajaloSek + " sekund");
-                
+        System.out.println("Čas za izvedbo vsega zgoraj je trajal: " + kolikoCasaJeTrajaloSek + " sekund");
+        
+        //shranimo v mapo slike
         shraniNoveSlikeVmapo(rezultati);
         
     }
