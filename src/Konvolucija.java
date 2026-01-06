@@ -41,8 +41,9 @@ public class Konvolucija {
             // OBRAT SLIKE OZ MIRROR SE NAREDI VEDNO NA KONCU!
             if (cbMirror.isSelected()) {
                 trenutnaSlika = mirrorFunkcija(trenutnaSlika);
+                System.out.println("Operacija Mirror je bila narejena!");
 }
-        
+            System.out.println();
             rezultatiSlik.add(trenutnaSlika);
         }
 
