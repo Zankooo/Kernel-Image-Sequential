@@ -69,7 +69,7 @@ public class ImageService {
             return;
         }
 
-        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------");
         System.out.println("REZULTATI:");
 
         ArrayList<float[][]> kerneli = Kernel.izbiraKernelov(imenaKernelov);

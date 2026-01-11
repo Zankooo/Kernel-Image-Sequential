@@ -28,8 +28,6 @@ public class Gui {
         JCheckBox cbEdge = new JCheckBox("EdgeDetection");
         JCheckBox cbMirror = new JCheckBox("Mirror");
 
-
-
         ArrayList<String> imenaKernelov = new ArrayList<>();
         // te dve funkciji sta povezani med sabo
         ActionListener fairListener = ustvariFairListener(imenaKernelov, cbMirror);
@@ -77,6 +75,7 @@ public class Gui {
         return new JComboBox<>(slike);
     }
 
+    // to funkcijo najmanj zastopim
     private static ActionListener ustvariFairListener(ArrayList<String> imenaKernelov, JCheckBox cbMirror) {
         return event -> {
             JCheckBox source = (JCheckBox) event.getSource();
@@ -138,7 +137,8 @@ public class Gui {
                 ArrayList<BufferedImage> slikeSeznam = new ArrayList<>();
                 slikeSeznam.add(slika);
 
-                System.out.println("-------------------------");
+                System.out.println("---------------------------------------------------------------------------");
+                System.out.println("NOV CIKEL OPERACIJ!");
                 System.out.println("Izbrana slika: " + imeSlike);
                 System.out.println("Izbrani kerneli (zaporedje): " + imenaKernelov);
                 System.out.println("Izbran mirror: " + cbMirror.isSelected());

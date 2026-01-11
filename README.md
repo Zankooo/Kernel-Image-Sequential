@@ -48,14 +48,84 @@ Pri vseh treh verzijah programa (sekvenčni, vzporedni in porazdeljeni) sem (bom
 
 ### Testing Table - to še naredit
 
-|    Slika | n = 2     | n = 3     | n = 4     | n = 5     |
-|-----------|-----------|-----------|-----------|-----------|
-| **123MB** | 7.68 sec  | 11.41 sec | 14.74 sec | 14.81 sec |
-| **234MB** | 21.20 sec | 29.46 sec | 34.22 sec | 37.31 sec |
-| **350MB** | 32.41 sec | 48.56 sec | 51.07 sec | 54.04 sec |
-| **490MB** | 33.26 sec | 42.82 sec | 53.34 sec | 60.85 sec |
-| **613MB** | 35.01 sec | 53.12 sec | 64.67 sec | 74.80 sec |
 
+| Blur                   | Sekvenčna izvedba    | Paralelna izvedba   | Distributed izvedba |
+|------------------------|----------------------|---------------------|---------------------|
+| 128 x 128 Slika        | 0,023 sec            | Time for Parallel   | Time for Distributed|
+| 256 x 256 Slika        | 0,046 sec   | Time for Parallel   | Time for Distributed|
+| 384 x 384 Slika        | 0,084 sec  | Time for Parallel   | Time for Distributed|
+| 512 x 512 Slika        | 0,136 sec  | Time for Parallel   | Time for Distributed|
+| 767 x 768 Slika        | 0,277 sec  | Time for Parallel   | Time for Distributed|
+| 1024 x 1024 Slika      | 0,465 sec  | Time for Parallel   | Time for Distributed|
+| 1536 x 1536 Slika      | 1,027 sec  | Time for Parallel   | Time for Distributed|
+| 2048 x 2048 Slika      | 1,822 sec  | Time for Parallel   | Time for Distributed|
+| 3072 x 3072 Slika      | 4,105 sec  | Time for Parallel   | Time for Distributed|
+| 4096 x 4096 Slika      | 7,395 sec  | Time for Parallel   | Time for Distributed|
+
+| Sharpen                | Sekvenčna izvedba    | Paralelna izvedba   | Distributed izvedba |
+|------------------------|----------------------|---------------------|---------------------|
+| 128 x 128 Slika        | 0,01 sec             | Time for Parallel   | Time for Distributed|
+| 256 x 256 Slika        | 0,016 sec            | Time for Parallel   | Time for Distributed|
+| 384 x 384 Slika        | 0,041 sec            | Time for Parallel   | Time for Distributed|
+| 512 x 512 Slika        | 0,06 sec             | Time for Parallel   | Time for Distributed|
+| 767 x 768 Slika        | 0,122 sec            | Time for Parallel   | Time for Distributed|
+| 1024 x 1024 Slika      | 0,217 sec            | Time for Parallel   | Time for Distributed|
+| 1536 x 1536 Slika      | 0,48 sec             | Time for Parallel   | Time for Distributed|
+| 2048 x 2048 Slika      | 0,862 sec            | Time for Parallel   | Time for Distributed|
+| 3072 x 3072 Slika      | 1,936 sec            | Time for Parallel   | Time for Distributed|
+| 4096 x 4096 Slika      | 3,417 sec            | Time for Parallel   | Time for Distributed|
+
+|  SobelX                | Sekvenčna izvedba    | Paralelna izvedba   | Distributed izvedba |
+|------------------------|----------------------|---------------------|---------------------|
+| 128 x 128 Slika        | 0,008 sec  | Time for Parallel   | Time for Distributed|
+| 256 x 256 Slika        | 0,02 sec  | Time for Parallel   | Time for Distributed|
+| 384 x 384 Slika        | 0,047 sec  | Time for Parallel   | Time for Distributed|
+| 512 x 512 Slika        | 0,06 sec  | Time for Parallel   | Time for Distributed|
+| 767 x 768 Slika        | 0,118 sec  | Time for Parallel   | Time for Distributed|
+| 1024 x 1024 Slika      | 0,209 sec  | Time for Parallel   | Time for Distributed|
+| 1536 x 1536 Slika      | 0,478 sec  | Time for Parallel   | Time for Distributed|
+| 2048 x 2048 Slika      | 0,831 sec | Time for Parallel   | Time for Distributed|
+| 3072 x 3072 Slika      | 1,882 sec  | Time for Parallel   | Time for Distributed|
+| 4096 x 4096 Slika      | 3,311 sec  | Time for Parallel   | Time for Distributed|
+
+| Gaussian                   | Sekvenčna izvedba    | Paralelna izvedba   | Distributed izvedba |
+|------------------------|----------------------|---------------------|---------------------|
+| 128 x 128 Slika        | 0,007 sec  | Time for Parallel   | Time for Distributed|
+| 256 x 256 Slika        | 0,022 sec  | Time for Parallel   | Time for Distributed|
+| 384 x 384 Slika        | 0,041 sec | Time for Parallel   | Time for Distributed|
+| 512 x 512 Slika        | 0,06 sec  | Time for Parallel   | Time for Distributed|
+| 767 x 768 Slika        | 0,123 sec  | Time for Parallel   | Time for Distributed|
+| 1024 x 1024 Slika      | 0,215 sec  | Time for Parallel   | Time for Distributed|
+| 1536 x 1536 Slika      | 0,487 sec | Time for Parallel   | Time for Distributed|
+| 2048 x 2048 Slika      | 0,859 sec  | Time for Parallel   | Time for Distributed|
+| 3072 x 3072 Slika      | 1,953 sec  | Time for Parallel   | Time for Distributed|
+| 4096 x 4096 Slika      | 3,492 sec  | Time for Parallel   | Time for Distributed|
+
+| Edge detection                  | Sekvenčna izvedba    | Paralelna izvedba   | Distributed izvedba |
+|------------------------|----------------------|---------------------|---------------------|
+| 128 x 128 Slika        | 0,009 sec  | Time for Parallel   | Time for Distributed|
+| 256 x 256 Slika        | 0,016 sec  | Time for Parallel   | Time for Distributed|
+| 384 x 384 Slika        | 0,037 sec  | Time for Parallel   | Time for Distributed|
+| 512 x 512 Slika        | 0,057 sec  | Time for Parallel   | Time for Distributed|
+| 767 x 768 Slika        | 0,118 sec  | Time for Parallel   | Time for Distributed|
+| 1024 x 1024 Slika      | 0,208 sec  | Time for Parallel   | Time for Distributed|
+| 1536 x 1536 Slika      | 0,474 sec  | Time for Parallel   | Time for Distributed|
+| 2048 x 2048 Slika      | 0,838 sec  | Time for Parallel   | Time for Distributed|
+| 3072 x 3072 Slika      | 1,904 sec  | Time for Parallel   | Time for Distributed|
+| 4096 x 4096 Slika      | 3,320 sec  | Time for Parallel   | Time for Distributed|
+
+| Mirror                   | Sekvenčna izvedba    | Paralelna izvedba   | Distributed izvedba |
+|------------------------|----------------------|---------------------|---------------------|
+| 128 x 128 Slika        | 0,001 sec  | Time for Parallel   | Time for Distributed|
+| 256 x 256 Slika        | 0,004 sec  | Time for Parallel   | Time for Distributed|
+| 384 x 384 Slika        | 0,005 sec  | Time for Parallel   | Time for Distributed|
+| 512 x 512 Slika        | 0,011 sec  | Time for Parallel   | Time for Distributed|
+| 767 x 768 Slika        | 0,017 sec  | Time for Parallel   | Time for Distributed|
+| 1024 x 1024 Slika      | 0,028 sec  | Time for Parallel   | Time for Distributed|
+| 1536 x 1536 Slika      | 0,061 sec  | Time for Parallel   | Time for Distributed|
+| 2048 x 2048 Slika      | 0,111 sec  | Time for Parallel   | Time for Distributed|
+| 3072 x 3072 Slika      | 0,249 sec  | Time for Parallel   | Time for Distributed|
+| 4096 x 4096 Slika      | 0,449 sec  | Time for Parallel   | Time for Distributed|
 
 
 ## ⚡ Izboljšane oziroma drugačne verzije programa
