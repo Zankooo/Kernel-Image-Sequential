@@ -26,6 +26,10 @@ public class Konvolucija {
         
         // kamor bomo shranjevali rezultate slik po konvoluciji
         ArrayList<BufferedImage> rezultatiSlik = new ArrayList<>();
+        
+        // merimo čas
+        long zacetniCas = System.currentTimeMillis();
+
         // vzamemo vsako sliko posebej
         for (int i = 0; i < slike.size(); i++) {
             BufferedImage trenutnaSlika = slike.get(i);
@@ -46,6 +50,13 @@ public class Konvolucija {
             System.out.println();
             rezultatiSlik.add(trenutnaSlika);
         }
+
+        long koncaniCas = System.currentTimeMillis();
+        double kolikoCasaJeTrajaloSek = (koncaniCas - zacetniCas) / 1000.0;
+
+        System.out.println();
+        System.out.println("Čas za izvedbo vsega zgoraj je trajal: " + kolikoCasaJeTrajaloSek + " sekund");
+        
 
         return rezultatiSlik;
     }

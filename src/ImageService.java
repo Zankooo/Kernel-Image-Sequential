@@ -74,19 +74,10 @@ public class ImageService {
 
         ArrayList<float[][]> kerneli = Kernel.izbiraKernelov(imenaKernelov);
         
-        // čas merimo izključno za izvedbo konvolucije
-        // tukaj ne vključimo notri čas branja slika čas write na disk..
-        long zacetniCas = System.currentTimeMillis();
-
+    
         ArrayList<BufferedImage> rezultati =
                 Konvolucija.izvediOperacije(slike, kerneli, cbmirror);
-
-        long koncaniCas = System.currentTimeMillis();
-        double kolikoCasaJeTrajaloSek = (koncaniCas - zacetniCas) / 1000.0;
-
-        System.out.println();
-        System.out.println("Čas za izvedbo vsega zgoraj je trajal: " + kolikoCasaJeTrajaloSek + " sekund");
-        
+    
         //shranimo v mapo slike
         shraniNoveSlikeVmapo(rezultati);
         
