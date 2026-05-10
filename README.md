@@ -62,7 +62,7 @@ Pri vseh treh verzijah programa (sekvenčni, vzporedni in porazdeljeni) sem (bom
 | 3072 x 3072 Slika      | 4,105 sec            | 0,887 sec                        | 0,334 sec|
 | 4096 x 4096 Slika      | 7,395 sec            | 1,493 sec                         | 0,592 sec|
 
-![alt text](/slike-grafov/Blur.png)
+<img src="slike-grafov/Blur.png" width="78%" height="600">
 
 <br>
 <hr>
@@ -81,7 +81,7 @@ Pri vseh treh verzijah programa (sekvenčni, vzporedni in porazdeljeni) sem (bom
 | 3072 x 3072 Slika      | 1,936 sec            | 0,733 sec           | 0,260 sec|
 | 4096 x 4096 Slika      | 3,417 sec            | 1,241 sec           | 0,465 sec|
 
-![alt text](/slike-grafov/sharpen.png)
+<img src="slike-grafov/sharpen.png" width="78%" height="600">
 <br>
 <hr>
 <br>
@@ -99,7 +99,7 @@ Pri vseh treh verzijah programa (sekvenčni, vzporedni in porazdeljeni) sem (bom
 | 3072 x 3072 Slika      | 1,882 sec            | 0,679 sec           | 0,272 sec|
 | 4096 x 4096 Slika      | 3,311 sec            | 1,245 sec           | 0,489 sec|
 
-![alt text](/slike-grafov/SobelX.png)
+<img src="slike-grafov/SobelX.png" width="78%" height="600">
 <br>
 <hr>
 <br>
@@ -117,7 +117,7 @@ Pri vseh treh verzijah programa (sekvenčni, vzporedni in porazdeljeni) sem (bom
 | 3072 x 3072 Slika      | 1,953 sec            | 0,694 sec           | 0,253 sec|
 | 4096 x 4096 Slika      | 3,492 sec            | 1,259 sec           | 0,448 sec|
 
-![alt text](/slike-grafov/Gaussian.png)
+<img src="slike-grafov/Gaussian.png" width="78%" height="600">
 <br>
 <hr>
 <br>
@@ -135,7 +135,7 @@ Pri vseh treh verzijah programa (sekvenčni, vzporedni in porazdeljeni) sem (bom
 | 3072 x 3072 Slika      | 1,904 sec            | 0,753 sec           | 0,279 sec|
 | 4096 x 4096 Slika      | 3,320 sec            | 1,305 sec           | 0,515 sec |
 
-![alt text](/slike-grafov/EdgeDetection.png)
+<img src="slike-grafov/EdgeDetection.png" width="78%" height="600">
 <br>
 <hr>
 <br>
