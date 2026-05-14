@@ -108,7 +108,7 @@ public class Konvolucija {
         // koliko je visok oziroma koliko je vseh vrstic
         int kernelDolzina = kernel.length;
 
-        //filter, če je kernel sploh v redu
+        //filter za vsak slucaj, če je kernel sploh v redu. More bit liho 
         if (kernelSirina % 2 == 0 || kernelDolzina % 2 == 0) {
             throw new IllegalArgumentException("Kernel mora imeti liho širino in višino (npr. 3x3, 5x5).");
         }
@@ -122,53 +122,61 @@ public class Konvolucija {
         int sirinaSlike = slika.getWidth();
         int visinaSlike = slika.getHeight();
 
-        // ustvarjanje nove slike
+        // ustvarjanje nove slike ki je sprva prazna in je velikosti toliko kot je slika ki jo obravnavamo
         BufferedImage novaSlika = new BufferedImage(sirinaSlike, visinaSlike, BufferedImage.TYPE_INT_ARGB);
 
-        // prvi for loop da se premaknemo eno vrstico dol
-        for (int y = 0; y < visinaSlike; y++) {
+        // prvi for loop da se premikamo po vrstici dol  
+        for (int poStolpcuDol = 0; poStolpcuDol < visinaSlike; poStolpcuDol++) {
             // drugi for loop pa je da se premikamo po pikslih od leve proti desni celo vrstico
-            // vsako vrstico posebi, začnemo levo zgori in piksel po piksel vrstico
-            // in pol se pomaknemo v drugo vrstico
-            for (int x = 0; x < sirinaSlike; x++) {
+            for (int poVrsticiDesno = 0; poVrsticiDesno < sirinaSlike; poVrsticiDesno++) {
 
                 // tukaj si pripravimo ker bomo seštevali
-                float vsotaRed = 0, vsotaGreen = 0, vsotaBlue = 0;
+                float vsotaRed = 0;
+                float vsotaGreen = 0; 
+                float vsotaBlue = 0;
 
                 // vzamemo alpha vrednost centralnega piksla
                 // >>> 24 premakne alpha na pravo mesto
                 // & 0xFF odstrani ostale bite
-                int centerARGB = slika.getRGB(x, y);
-                int a = (centerARGB >>> 24) & 0xFF;
+                // vzamemo prosojnost piksla
+                int centerARGB = slika.getRGB(poVrsticiDesno, poStolpcuDol);
+                int prosojnost = (centerARGB >>> 24) & 0xFF;
 
-                // premikamo se po kernelu
-                //
+                
+                // te dve zanki dolocata katere sosede bomo pogledali
+                // te dva for loopa dolocata katere okoliske sosede bomo vprasali za naso novo barvo
+                // te dve zanki dolocata katere sosede bomo vprasali
+                // ce je 3x3 kernel, je polmer 1 in for loopa bosta sla od -1 do 1
+                // ta vrstica gre po y osi gor dol
                 for (int kernelY = -kernelPolmerYos; kernelY <= kernelPolmerYos; kernelY++) {
+                    // // ta vrstica gre po x levo desno
                     for (int kernelX = -kernelPolmerXos; kernelX <= kernelPolmerXos; kernelX++) {
 
-                        int px = clamp(x + kernelX, 0, sirinaSlike - 1);
-                        int py = clamp(y + kernelY, 0, visinaSlike - 1);
-
+                        int px = omejimoRobnePiksle(poVrsticiDesno + kernelX, 0, sirinaSlike - 1);
+                        int py = omejimoRobnePiksle(poStolpcuDol + kernelY, 0, visinaSlike - 1);
+                        
                         int argb = slika.getRGB(px, py);
-
-                        int r = (argb >>> 16) & 0xFF;
-                        int g = (argb >>> 8) & 0xFF;
-                        int b = argb & 0xFF;
+                        
+                        // pridobimo rgb iz sosedov
+                        int rdeca = (argb >>> 16) & 0xFF;
+                        int zelena = (argb >>> 8) & 0xFF;
+                        int modra = argb & 0xFF;
 
                         float weight = kernel[kernelY + kernelPolmerYos][kernelX + kernelPolmerXos];
 
-                        vsotaRed += r * weight;
-                        vsotaGreen += g * weight;
-                        vsotaBlue += b * weight;
+                        vsotaRed += rdeca * weight;
+                        vsotaGreen += zelena * weight;
+                        vsotaBlue += modra * weight;
                     }
                 }
 
-                int outRed = clamp(Math.round(vsotaRed), 0, 255);
-                int outGreen = clamp(Math.round(vsotaGreen), 0, 255);
-                int outBlue = clamp(Math.round(vsotaBlue), 0, 255);
-
-                int outARGB = (a << 24) | (outRed << 16) | (outGreen << 8) | outBlue;
-                novaSlika.setRGB(x, y, outARGB);
+                int outRed = omejimoRobnePiksle(Math.round(vsotaRed), 0, 255);
+                int outGreen = omejimoRobnePiksle(Math.round(vsotaGreen), 0, 255);
+                int outBlue = omejimoRobnePiksle(Math.round(vsotaBlue), 0, 255);
+                // zapakirmo v eno stevilko
+                int outARGB = (prosojnost << 24) | (outRed << 16) | (outGreen << 8) | outBlue;
+                // na lokaciji pobarvamo piksel 
+                novaSlika.setRGB(poVrsticiDesno, poStolpcuDol, outARGB);
             }
         }
 
@@ -184,14 +192,17 @@ public class Konvolucija {
      *
      * Funkcija se uporablja za preprečevanje dostopa izven
      * meja slike (npr. pri obdelavi robnih pikslov).
-     *
-     * @param v Vrednost, ki jo želimo omejiti.
-     * @param lo Spodnja dovoljena meja.
-     * @param hi Zgornja dovoljena meja.
+     * Če smo na piksli (10, 10) in filter želi pogledati soseda levo zgoraj, 
+     * je kernelX = -1 in kernelY = -1. Nova lokacija bi bila (9, 9).
+     * Zakaj clamp: Če bi bili na piksli (0, 0), bi bil izračun (-1, -1). Brez clampa bi program puko
+     * clamp pa ga prisili, da pogleda spet piksel (0, 0).
+     * @param stevilkaKiJoOmejimo Vrednost, ki jo želimo omejiti.
+     * @param minimalno Spodnja dovoljena meja. ce bi morali iti na 
+     * @param maksimalno Zgornja dovoljena meja. 
      * @return Omejena vrednost znotraj intervala [lo, hi].
      */
-    private static int clamp(int v, int lo, int hi) {
-        return Math.max(lo, Math.min(hi, v));
+    private static int omejimoRobnePiksle(int stevilkaKiJoOmejimo, int minimalno, int maksimalno) {
+        return Math.max(minimalno, Math.min(maksimalno, stevilkaKiJoOmejimo));
     }
 
 }
