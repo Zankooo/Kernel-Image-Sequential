@@ -194,8 +194,8 @@ public class Konvolucija {
      * meja slike (npr. pri obdelavi robnih pikslov).
      * Če smo na piksli (10, 10) in filter želi pogledati soseda levo zgoraj, 
      * je kernelX = -1 in kernelY = -1. Nova lokacija bi bila (9, 9).
-     * Zakaj clamp: Če bi bili na piksli (0, 0), bi bil izračun (-1, -1). Brez clampa bi program puko
-     * clamp pa ga prisili, da pogleda spet piksel (0, 0).
+     * Zakaj clamp: Če bi bili na pikslu (0, 0), bi moral izračun upoštevati barvo na pikslu (-1, -1). Brez clampa bi program puko
+     * clamp pa ga prisili, da pogleda spet piksel (0, 0). In to uposteva
      * @param stevilkaKiJoOmejimo Vrednost, ki jo želimo omejiti.
      * @param minimalno Spodnja dovoljena meja. ce bi morali iti na 
      * @param maksimalno Zgornja dovoljena meja. 
