@@ -5,6 +5,27 @@ Kernel image processing je temeljna tehnika računalniškega vida, kjer sliko ob
 ## 🧩 Kaj program dela?
 Mi kot uporabnik programa damo programu eno ali več slik svojih poljubnih slik (lahko izbiramo tudi med slikami, ki so prednaložene že v programu). Nato izberemo katero oziroma katere operacije želimo da se izvedejo na vsaki od izbranih slik. Lahko izberemo eno operacijo lahko jih izberemo več. In potem program na vsaki od teh slik izvede izbrane operacije.
 
+## ⚙️ Algoritem za konvolucijo
+
+1. Prebere velikost kernela.
+2. Preveri, da ima kernel sredino.
+3. Izračunaj polmer kernela.
+4. Ustvari novo prazno sliko primerne velikosti.
+5. Za vsak piksel slike:
+   - Pripravi vsote za `R`, `G` in `B`.
+   - Za vsak element kernela:
+     - izračunaj koordinato sosednjega piksla,
+     - če greš izven slike, uporabi robni piksel,
+     - preberi RGB vrednosti soseda,
+     - preberi utež iz kernela,
+     - RGB vrednosti pomnoži z utežjo,
+     - prištej rezultat v vsote.
+   - Zaokroži `R`, `G` in `B`.
+   - Omeji `R`, `G` in `B` med `0` in `255`.
+   - Sestavi nov `ARGB` piksel.
+   - Zapiši piksel v novo sliko.
+6. Vrni novo sliko.
+
 ## 🧪 Primeri uporabe (Use Case)
 
 ### 1. Primer uporabe
@@ -160,5 +181,4 @@ Pri vseh treh verzijah programa (sekvenčni, vzporedni in porazdeljeni) sem (bom
 Ta program je implementiran sekvenčno. 
 Glede na njegovo strukturo nam daje možnost da ga optimiziramo. 
 Optimizirani verziji `vzporedna (paralelna)` in `porazdeljena (distributed)` bosta na voljo kmalu... Coming soon
-
 

@@ -115,6 +115,7 @@ public class Gui {
         cbMirror.addActionListener(fairListener);
     }
 
+    // TUKEJ JE NAREJENO ZA ENO SLIKO
     private static void 
     dodajListenerZaEnaSlika(JButton gumbEnaSlika,JComboBox<String> comboSlike,ArrayList<String> imenaKernelov, JCheckBox cbMirror) {
         gumbEnaSlika.addActionListener(event -> {
@@ -151,8 +152,8 @@ public class Gui {
         });
     }
 
-
-    private static void dodajListenerZaMapa(JButton gumbMapa,JFrame frame,ArrayList<String> imenaKernelov, JCheckBox cbMirror) {
+    // TUKEJ JE NAREJENO ZA MAPO SLIK
+    private static void dodajListenerZaMapa(JButton gumbMapa, JFrame frame, ArrayList<String> imenaKernelov, JCheckBox cbMirror) {
         
         gumbMapa.addActionListener(event -> {
 
